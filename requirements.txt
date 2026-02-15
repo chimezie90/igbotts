@@ -1,0 +1,18 @@
+torch>=2.0.0
+torchaudio>=2.0.0
+librosa>=0.10.0
+soundfile>=0.12.0
+numpy>=1.24.0
+tqdm>=4.65.0
+
+# HuggingFace datasets (for WAXAL download)
+datasets>=2.14.0
+
+# TextGrid parsing (for MFA alignments)
+textgrid>=1.5
+
+# Experiment tracking
+wandb>=0.15.0
+
+# Montreal Forced Aligner (install separately via conda)
+# conda install -c conda-forge montreal-forced-aligner

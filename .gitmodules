@@ -1,0 +1,3 @@
+[submodule "kokoro_training"]
+	path = kokoro_training
+	url = https://github.com/jonirajala/kokoro_training.git
