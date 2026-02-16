@@ -163,9 +163,32 @@ class IgboTTS:
                         module.running_mean.zero_()
                         module.running_var.fill_(1.0)
 
+        # Patch duration predictor to scale up predictions.
+        # MFA durations in training only cover voiced phoneme segments, not silence.
+        # At inference the model predicts durations in that same compressed scale,
+        # but needs full mel-frame-length output. Scale factor ~5x bridges the gap.
+        original_predict = model._predict_durations
+        duration_scale = 5.0
+
+        def scaled_predict_durations(text_encoded):
+            log_dur = original_predict(text_encoded)
+            return log_dur + torch.log(torch.tensor(duration_scale))
+
+        model._predict_durations = scaled_predict_durations
+
+        # Bypass PostNet — its BatchNorm running stats are NaN from bfloat16 training,
+        # and the residual washes out the coarse mel to silence (-11.5 everywhere).
+        # The coarse mel alone is what the model actually learned.
+        import types
+
+        def postnet_identity(self_postnet, mel):
+            return torch.zeros_like(mel)
+
+        model.postnet.forward = types.MethodType(postnet_identity, model.postnet)
+
         model.to(self.device)
         model.eval()
-        logger.info(f"Model loaded (vocab_size={vocab_size})")
+        logger.info(f"Model loaded (vocab_size={vocab_size}, duration_scale={duration_scale}x)")
         return model
 
     # ── Synthesis ───────────────────────────────────────────────────
