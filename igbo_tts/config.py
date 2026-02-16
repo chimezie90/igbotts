@@ -248,6 +248,7 @@ def get_cloud_config() -> IgboTrainingConfig:
     """
     return IgboTrainingConfig(
         batch_size=24,
+        learning_rate=5e-4,
         n_encoder_layers=4,
         n_decoder_layers=4,
         hidden_dim=384,
@@ -258,6 +259,7 @@ def get_cloud_config() -> IgboTrainingConfig:
         pin_memory=True,
         prefetch_factor=4,
         gradient_checkpointing=True,
+        max_seq_length=1300,
         save_every=10,
         keep_last_n_checkpoints=5,
         log_interval=20,
