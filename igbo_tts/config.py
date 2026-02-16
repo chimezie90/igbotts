@@ -247,7 +247,7 @@ def get_cloud_config() -> IgboTrainingConfig:
     Medium model (25-30M params), large batches, optimized data loading.
     """
     return IgboTrainingConfig(
-        batch_size=48,
+        batch_size=24,
         n_encoder_layers=4,
         n_decoder_layers=4,
         hidden_dim=384,
@@ -257,7 +257,7 @@ def get_cloud_config() -> IgboTrainingConfig:
         num_workers=4,
         pin_memory=True,
         prefetch_factor=4,
-        gradient_checkpointing=False,
+        gradient_checkpointing=True,
         save_every=10,
         keep_last_n_checkpoints=5,
         log_interval=20,
