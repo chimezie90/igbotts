@@ -10,10 +10,15 @@ data/
 
 # Model checkpoints
 output_models*/
+output_vits_igbo/
+vocoder_models/
 checkpoints/
 *.pth
 *.pt
 *.ckpt
+
+# Generated filelists (machine-specific absolute paths)
+igbo_vits/filelists/*.txt
 
 # Python
 __pycache__/

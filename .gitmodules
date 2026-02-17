@@ -1,3 +1,6 @@
 [submodule "kokoro_training"]
 	path = kokoro_training
 	url = https://github.com/jonirajala/kokoro_training.git
+[submodule "vits_repo"]
+	path = vits_repo
+	url = https://github.com/jaywalnut310/vits.git
